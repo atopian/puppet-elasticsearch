@@ -152,7 +152,7 @@ define elasticsearch::service::systemd(
       $defaults_location = $elasticsearch::defaults_location
 
       if $elasticsearch::repo_version >= '5.x' {
-        $systemd_java_opts = ''
+        $systemd_java_opts = '-Ees.default.path.home=${ES_HOME} -Ees.default.path.logs=${LOG_DIR} -Ees.default.path.data=${DATA_DIR} -Ees.default.path.work=${WORK_DIR} -Ees.default.path.conf=${CONF_DIR}'
       }else{
         $systemd_java_opts = '-Des.default.path.home=${ES_HOME} -Des.default.path.logs=${LOG_DIR} -Des.default.path.data=${DATA_DIR} -Des.default.path.work=${WORK_DIR} -Des.default.path.conf=${CONF_DIR}'
       }
