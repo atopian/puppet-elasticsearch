@@ -151,6 +151,12 @@ define elasticsearch::service::systemd(
       $pid_dir           = $elasticsearch::pid_dir
       $defaults_location = $elasticsearch::defaults_location
 
+      if $elasticsearch::repo_version >= '5.x' {
+        $systemd_java_opts = ''
+      }else{
+        $systemd_java_opts = '-Des.default.path.home=${ES_HOME} -Des.default.path.logs=${LOG_DIR} -Des.default.path.data=${DATA_DIR} -Des.default.path.work=${WORK_DIR} -Des.default.path.conf=${CONF_DIR}'
+      }
+
       if ($new_init_defaults != undef and is_hash($new_init_defaults) and has_key($new_init_defaults, 'MAX_OPEN_FILES')) {
         $nofile = $new_init_defaults['MAX_OPEN_FILES']
       }else{
